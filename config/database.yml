@@ -1,0 +1,29 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8mb4
+  collation: utf8mb4_bin
+  pool: 5
+  host: <%= ENV["DATABASE_HOSTNAME"] %>
+  database: action_cable
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  redis:
+    host: redis://<%= ENV["REDIS_HOSTNAME"] %>:6379
+    options:
+      :namespace: <%= ENV["DATABASE_NAME"] %>
+
+development:
+  <<: *default
+  database: memvo_development
+
+test:
+  <<: *default
+  database: memvo_test
+
+staging:
+  <<: *default
+  database: <%= ENV["DATABASE_NAME"] %>
+
+production:
+  <<: *default
+  database: <%= ENV["DATABASE_NAME"] %>
